@@ -46,6 +46,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.ball.active = True
+
+
             
             # update the game
             self.all_sprites.update(dt)
