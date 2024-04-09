@@ -25,11 +25,11 @@ class Player(pygame.sprite.Sprite):
         elif keys[pygame.K_LEFT]:
             self.direction = -1
         else:
-            self.direction = 0
+            self.direction.x = 0
 
     def update(self, dt):
         self.input()
-        self.pos.x += self.direction * self.speed * dt
+        self.pos.x += self.direction.x * self.speed * dt
         self.rect.x = round(self.pos.x)
 
 
