@@ -34,11 +34,11 @@ class Game:
         # cycle through all rows and columns of BLOCK MAP
         for row_index, row in enumerate(BLOCK_MAP):
             for col_index, col in enumerate(row):
-                
-                # Find the x and y position of each blocks
-                y = row_index * (BLOCK_HEIGHT + GAP_SIZE) + GAP_SIZE // 2
-                x = col_index * (BLOCK_WIDTH + GAP_SIZE) + GAP_SIZE // 2
-                Block(col, (x,y), [self.all_sprites])
+                if col != ' ':
+                    # Find the x and y position of each blocks
+                    y = row_index * (BLOCK_HEIGHT + GAP_SIZE) + GAP_SIZE // 2
+                    x = col_index * (BLOCK_WIDTH + GAP_SIZE) + GAP_SIZE // 2
+                    Block(col, (x,y), [self.all_sprites])
    
 
 
