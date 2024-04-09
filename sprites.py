@@ -81,8 +81,9 @@ class Ball(pygame.sprite.Sprite):
                 self.rect.top = 0
                 self.pos.y = self.rect.y
                 self.direction.y *= -1
-            elif self.rect.bottom > WINDOW_WIDTH:
+            elif self.rect.bottom > WINDOW_HEIGHT:
                 self.active = False
+                self.direction.y = -1
 
 
     def collision():
