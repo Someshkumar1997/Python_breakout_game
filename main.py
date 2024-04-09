@@ -1,6 +1,6 @@
 import pygame , sys, time
 from settings import *
-from sprites import Player
+from sprites import Player, Ball
 
 class Game:
     def __init__(self) -> None:
@@ -18,6 +18,7 @@ class Game:
 
         # setup
         self.player = Player(self.all_sprites)
+        self.ball = Ball(groups= self.all_sprites, player= self.player)
 
     def create_bg(self):
         bg_original = pygame.image.load('C:/Users/Somesh Kumar Sahoo/OneDrive/Desktop/breakout game/graphics/other/bg.png').convert()

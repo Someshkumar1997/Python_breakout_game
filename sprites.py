@@ -1,6 +1,8 @@
+from typing import Any
 import pygame
 from pygame.sprite import _Group
 from settings import *
+from random import choice
 
 class Player(pygame.sprite.Sprite):
     
@@ -42,5 +44,32 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = round(self.pos.x)
 
         self.screen_constraint()
+
+
+class Ball(pygame.sprite.Sprite):
+    def __init__(self, groups, player) -> None:
+        super().__init__(groups)
+
+        # collision objects
+        self.player = player
+
+        # graphics setup
+        self.image = pygame.image.load('*file location').convert_alpha()
+
+        # position setup
+        self.rect = self.image.get_rect(midbottom = player.rect.midtop)
+        self.direction = pygame.math.Vector2(x= choice((1, -1)), y= -1)
+        self.speed = 400
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+
+        # active
+        self.active = False
+    def update(self, dt):
+
+        if self.active:
+            pass
+        else:
+            self.rect.midbottom = self.player.rect.midtop
+            self.pos = pygame.math.Vector2(self.rect.topleft)
 
 
