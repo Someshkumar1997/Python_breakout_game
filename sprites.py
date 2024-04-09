@@ -150,3 +150,11 @@ class Ball(pygame.sprite.Sprite):
             self.pos = pygame.math.Vector2(self.rect.topleft)
 
 
+class Block(pygame.sprite.Sprite):
+
+    def __init__(self, block_type, pos, groups) -> None:
+        super().__init__(groups)
+
+        self.image = pygame.Surface((BLOCK_HEIGHT, BLOCK_WIDTH))
+        self.rect = self.image.get_rect(topleft = pos)
+
