@@ -15,11 +15,13 @@ class Game:
 
         # sprite group setup
         self.all_sprites = pygame.sprite.Group()
+        self.block_sprites = pygame.sprite.Group()
+
 
         # setup
         self.player = Player(self.all_sprites)
-        self.ball = Ball(groups= self.all_sprites, player= self.player)
         self.stage_setup()
+        self.ball = Ball(groups= self.all_sprites, player= self.player, blocks= self.block_sprites)
 
     def create_bg(self):
         bg_original = pygame.image.load('C:/Users/Somesh Kumar Sahoo/OneDrive/Desktop/breakout game/graphics/other/bg.png').convert()
@@ -38,7 +40,7 @@ class Game:
                     # Find the x and y position of each blocks
                     y = row_index * (BLOCK_HEIGHT + GAP_SIZE) + GAP_SIZE // 2
                     x = col_index * (BLOCK_WIDTH + GAP_SIZE) + GAP_SIZE // 2
-                    Block(col, (x,y), [self.all_sprites])
+                    Block(col, (x,y), [self.all_sprites, self.block_sprites])
    
 
 
