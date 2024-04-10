@@ -40,11 +40,14 @@ class SurfaceMaker:
 
         # left side
         left_height = size[1] - (sides['topleft'].get_height() + sides['bottomleft'].get_height())
-        scaled_left_surf = pygame.transform.scale(surface= sides['left'], size= (side['left'].get_width(), left_height))
+        scaled_left_surf = pygame.transform.scale(surface= sides['left'], size= (sides['left'].get_width(), left_height))
         image.blit(scaled_left_surf, (0, sides['topleft'].get_height()))
 
 
         # right side
+        right_height = size[1] - (sides['topleft'].get_height() + sides['bottomright'].get_height())
+        scaled_right_surf = pygame.transform.scale(surface= sides['right'], size= (sides['right'].get_width(), right_height))
+        image.blit(scaled_right_surf, (size[0] - sides['right'].get_width(), sides['topright'].get_height()))
 
 
         # bottom side
