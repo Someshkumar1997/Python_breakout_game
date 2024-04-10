@@ -79,6 +79,16 @@ class Game:
             self.can_shoot = True
             
 
+    def projectile_block_collision(self):
+        for projectile in self.projectile_sprites:
+            overlap_sprites = pygame.sprite.spritecollide(projectile, self.block_sprites, False)
+            if overlap_sprites:
+                for sprite in overlap_sprites:
+                    sprite.get_damage(1)
+                projectile.kill()
+
+
+
     def run(self):
         last_time = time.time()
         
@@ -110,6 +120,7 @@ class Game:
             self.all_sprites.update(dt)
             self.upgrade_collision()
             self.laser_time()
+            self.projectile_block_collision()
             
             # draw the frame
             self.all_sprites.draw(self.display_surface)
