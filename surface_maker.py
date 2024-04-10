@@ -29,12 +29,28 @@ class SurfaceMaker:
         # 4 corners
         image.blit(sides['topleft'], (0, 0))
         image.blit(sides['topright'], (size[0] - sides['topright'].get_width(),0))
+        image.blit(sides['bottomleft'], (0, size[1] - sides['bottomleft'].get_height()))
+        image.blit(sides['bottomright'], (size[0] - sides['bottomright'].get_width(), size[1] - sides['bottomleft'].get_height()))      
         
 
         # top side
         top_width = size[0] - (sides['topleft'].get_width() + sides['topright'].get_width())
         scaled_top_surf = pygame.transform.scale(surface= sides['top'], size= (top_width, sides['top'].get_height()))
         image.blit(scaled_top_surf, (sides['topleft'].get_width(), 0))
+
+        # left side
+        left_height = size[1] - (sides['topleft'].get_height() + sides['bottomleft'].get_height())
+        scaled_left_surf = pygame.transform.scale(surface= sides['left'], size= (side['left'].get_width(), left_height))
+        image.blit(scaled_left_surf, (0, sides['topleft'].get_height()))
+
+
+        # right side
+
+
+        # bottom side
+
+
+
 
 
         # center color
