@@ -84,13 +84,14 @@ class Game:
                         self.ball.active = True
 
 
-            
+            # draw bg
+            self.display_surface.blit(self.bg, (0,0))
+
             # update the game
             self.all_sprites.update(dt)
             self.upgrade_collision()
             
             # draw the frame
-            self.display_surface.blit(self.bg, (0,0))
             self.all_sprites.draw(self.display_surface)
             self.display_hearts()
 
