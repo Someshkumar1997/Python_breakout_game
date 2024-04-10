@@ -1,6 +1,6 @@
 import pygame , sys, time
 from settings import *
-from sprites import Player, Ball, Block, Upgrades
+from sprites import Player, Ball, Block, Upgrades, Projectile
 from surface_maker import SurfaceMaker
 from random import choice
 
@@ -19,6 +19,7 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.block_sprites = pygame.sprite.Group()
         self.upgrade_sprites = pygame.sprite.Group()
+        self.projectile_sprites = pygame.sprite.Group()
 
 
         # setup
@@ -29,6 +30,11 @@ class Game:
 
         # hearts
         self.heart_surf = pygame.image.load('../graphics/other/heart.png').convert_alpha()
+
+        # laser projectiles
+        self.projectile_surface = pygame.image.load('../graphics/other/projectiles.png').convert_alpha()
+        self.can_shoot = True
+        self.shoot_time = 0
 
     def create_upgrade(self, pos):
         upgrade_type = choice(UPGRADES)
@@ -64,6 +70,14 @@ class Game:
         for sprite in overlap_sprites:
             self.player.upgrade(sprite.upgrade_type)
 
+    def create_projectile(self):
+        for projectile in self.player.laser_rects:
+            Projectile(pos= projectile.midtop - pygame.math.Vector2(0, 30), surface= self.projectile_surface, groups= [self.all_sprites, self.projectile_sprites])
+
+    def laser_time(self):
+        if pygame.time.get_ticks() - self.shoot_time >=500:
+            self.can_shoot = True
+            
 
     def run(self):
         last_time = time.time()
@@ -82,6 +96,11 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.ball.active = True
+                        if self.can_shoot:
+                            self.create_projectile()
+                            self.can_shoot = False
+                            self.shoot_time = pygame.time.get_ticks()
+
 
 
             # draw bg
@@ -90,6 +109,7 @@ class Game:
             # update the game
             self.all_sprites.update(dt)
             self.upgrade_collision()
+            self.laser_time()
             
             # draw the frame
             self.all_sprites.draw(self.display_surface)
