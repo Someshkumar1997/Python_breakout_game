@@ -24,6 +24,7 @@ class SurfaceMaker:
 
         # create one surface with the graphics with any size
         image = pygame.SurfaceType(size)
+        image.set_colorkey((0, 0, 0))
         sides = self.assets[block_type]
         
         # 4 corners
