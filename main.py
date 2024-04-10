@@ -1,7 +1,8 @@
 import pygame , sys, time
 from settings import *
-from sprites import Player, Ball, Block
+from sprites import Player, Ball, Block, Upgrades
 from surface_maker import SurfaceMaker
+from random import choice
 
 class Game:
     def __init__(self) -> None:
@@ -17,6 +18,7 @@ class Game:
         # sprite group setup
         self.all_sprites = pygame.sprite.Group()
         self.block_sprites = pygame.sprite.Group()
+        self.upgrade_sprites = pygame.sprite.Group()
 
 
         # setup
@@ -27,6 +29,10 @@ class Game:
 
         # hearts
         self.heart_surf = pygame.image.load('../graphics/other/heart.png').convert_alpha()
+
+    def create_upgrade(self, pos):
+        upgrade_type = choice(UPGRADES)
+        Upgrades(pos, upgrade_type, groups= [self.all_sprites, self.upgrade_sprites])
 
     def create_bg(self):
         bg_original = pygame.image.load('C:/Users/Somesh Kumar Sahoo/OneDrive/Desktop/breakout game/graphics/other/bg.png').convert()
@@ -45,7 +51,7 @@ class Game:
                     # Find the x and y position of each blocks
                     y = TOP_OFFSET + row_index * (BLOCK_HEIGHT + GAP_SIZE) + GAP_SIZE // 2
                     x = col_index * (BLOCK_WIDTH + GAP_SIZE) + GAP_SIZE // 2
-                    Block(col, (x,y), [self.all_sprites, self.block_sprites, self.surfacemaker])
+                    Block(col, (x,y), [self.all_sprites, self.block_sprites], self.surfacemaker, self.create_upgrade)
    
 
     def display_hearts(self):

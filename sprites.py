@@ -4,6 +4,27 @@ from pygame.sprite import _Group
 from settings import *
 from random import choice
 
+class Upgrades(pygame.sprite.Sprite):
+
+    def __init__(self, pos, upgrade_type, groups) -> None:
+        super().__init__(groups)
+
+        self.upgrade_type = upgrade_type
+        self.image = pygame.image.load(f'../graphics/upgrades/{upgrade_type}').convert_alpha()
+        self.rect = self.image.get_rect(midtop = pos)
+
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+        self.speed = 300
+
+
+    def update(self, dt):
+        self.pos.y += self.speed * dt
+        self.rect.y = round(self.pos.y)
+
+        if self.rect.top > WINDOW_HEIGHT + 100:
+            self.kill()
+
+
 class Player(pygame.sprite.Sprite):
     
     def __init__(self, *groups, surfacemaker) -> None:
@@ -163,7 +184,7 @@ class Ball(pygame.sprite.Sprite):
 
 class Block(pygame.sprite.Sprite):
 
-    def __init__(self, block_type, pos, groups, surfacemaker) -> None:
+    def __init__(self, block_type, pos, groups, surfacemaker, create_upgrade) -> None:
         super().__init__(groups)
 
         self.surfacemaker = surfacemaker
@@ -173,6 +194,9 @@ class Block(pygame.sprite.Sprite):
 
         # damage information
         self.health = int(block_type)
+
+        # upgrade
+        self.create_upgrade = create_upgrade
     
     def get_damage(self, amount):
         self.health -= amount
@@ -181,6 +205,7 @@ class Block(pygame.sprite.Sprite):
             # update the image
             self.image = self.surfacemaker.get_surf(COLOR_LEGEND[str(self.health)], (BLOCK_WIDTH, BLOCK_HEIGHT))
         else:
+            self.create_upgrade(self.rect.center)
             self.kill()
 
 
