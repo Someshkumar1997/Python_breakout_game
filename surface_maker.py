@@ -56,9 +56,11 @@ class SurfaceMaker:
         image.blit(scaled_bottom_surf, (sides['topleft'].get_width(), size[1] - sides['bottom'].get_height()))
 
 
-
-
         # center color
+        center_height = size[1] - (sides['top'].get_height() + sides['bottom'].get_height())
+        center_width = size[0] - (sides['right'].get_width() + sides['left'].get_width())
+        scaled_center = pygame.transform.scale(sides['center'], (center_width, center_height))
+        image.blit(scaled_center, sides['topleft'].get_size())
 
     # return that image to the blocks or the player
         return image
