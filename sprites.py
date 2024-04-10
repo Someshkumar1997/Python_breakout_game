@@ -163,7 +163,7 @@ class Block(pygame.sprite.Sprite):
         super().__init__(groups)
 
         self.surfacemaker = surfacemaker
-        self.image = self.surfacemaker.get_surf(block_type= block_type, size= (BLOCK_WIDTH, BLOCK_HEIGHT))
+        self.image = self.surfacemaker.get_surf(COLOR_LEGEND[block_type], block_type= block_type, size= (BLOCK_WIDTH, BLOCK_HEIGHT))
         self.rect = self.image.get_rect(topleft = pos)
         self.old_rect = self.rect.copy()
 
