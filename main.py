@@ -2,7 +2,7 @@ import pygame , sys, time
 from settings import *
 from sprites import Player, Ball, Block, Upgrades, Projectile
 from surface_maker import SurfaceMaker
-from random import choice
+from random import choice, randint
 
 class Game:
     def __init__(self) -> None:
@@ -35,6 +35,9 @@ class Game:
         self.projectile_surface = pygame.image.load('../graphics/other/projectiles.png').convert_alpha()
         self.can_shoot = True
         self.shoot_time = 0
+
+        # CRT
+        self.crt = CRT()
 
     def create_upgrade(self, pos):
         upgrade_type = choice(UPGRADES)
@@ -127,9 +130,32 @@ class Game:
             self.display_hearts()
 
 
+            # crt styling
+            self.crt.draw()
+
+
+
             # update window
             pygame.display.update()
 
+class CRT:
+
+    def __init__(self) -> None:
+        vignette = pygame.image.load('../graphics/other/tv.png').convert_alpha()
+        self.scaled_vignette = pygame.transform.scale(vignette, (WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.display_surface = pygame.display.get_surface()
+        self.create_crt_lines()
+
+    def create_crt_lines(self):
+        line_height = 4
+        line_amount = WINDOW_HEIGHT // line_height
+        for line in range(line_amount):
+            y = line * line_height
+            pygame.draw.line(self.scaled_vignette, color= 'black', start_pos= (0, y), end_pos= (WINDOW_WIDTH, y))
+
+    def draw(self):
+        self.scaled_vignette.set_alpha(randint(75, 90)) # 255 max and 0 no vignette
+        self.display_surface.blit(self.scaled_vignette, (0, 0))
 
 if __name__ == '__main__':
     game = Game()
