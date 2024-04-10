@@ -149,6 +149,13 @@ class Ball(pygame.sprite.Sprite):
         # active
         self.active = False
 
+        # sounds
+        self.impact_sound = pygame.mixer.Sound('../sounds/impact.wav')
+        self.impact_sound.set_volume(0.1)
+
+        self.fail_sound = pygame.mixer.Sound('../sounds/fail.wav')
+        self.fail_sound.set_volume(0.1)
+
     def window_collision(self, direction):
         if direction == 'horizontal':
             if self.rect.left < 0:
@@ -169,6 +176,7 @@ class Ball(pygame.sprite.Sprite):
                 self.active = False
                 self.direction.y = -1
                 self.player.hearts -= 1
+                self.fail_sound.play()
 
 
     def collision(self, direction):
@@ -184,11 +192,13 @@ class Ball(pygame.sprite.Sprite):
                         self.rect.right = sprite.rect.left - 1
                         self.pos.x = self.rect.x
                         self.direction.x *= -1
+                        self.impact_sound.play()
 
                     if self.rect.left <= sprite.rect.right and self.old_rect.left >= sprite.old_rect.right:
                         self.rect.left = sprite.rect.right + 1
                         self.pos.x = self.rect.x
                         self.direction.x *= -1
+                        self.impact_sound.play()
 
                     if getattr(sprite, 'health', None):
                         sprite.get_damage(1)
@@ -199,11 +209,13 @@ class Ball(pygame.sprite.Sprite):
                         self.rect.bottom = sprite.rect.top - 1
                         self.pos.y = self.rect.y
                         self.direction.y *= -1
+                        self.impact_sound.play()
 
                     if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
                         self.rect.top = sprite.rect.bottom + 1
                         self.pos.y = self.rect.y
                         self.direction.y *= -1
+                        self.impact_sound.play()
 
                     if getattr(sprite, 'health', None):
                         sprite.get_damage(1)

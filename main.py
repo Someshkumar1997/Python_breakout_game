@@ -39,6 +39,22 @@ class Game:
         # CRT
         self.crt = CRT()
 
+        # sounds
+        self.laser_sound = pygame.mixer.Sound('../sounds/laser.wav')
+        self.laser_sound.set_volume(0.1)
+
+        self.powerup_sound = pygame.mixer.Sound('../sounds/powerup.wav')
+        self.powerup_sound.set_volume(0.1)
+
+        self.laserhit_sound = pygame.mixer.Sound('../sounds/laser_hit.wav')
+        self.laserhit_sound.set_volume(0.02)
+
+        self.music = pygame.mixer.Sound('../sounds/music.wav')
+        self.music.set_volume(0.1)
+        self.music.play(loops= -1)
+
+
+
     def create_upgrade(self, pos):
         upgrade_type = choice(UPGRADES)
         Upgrades(pos, upgrade_type, groups= [self.all_sprites, self.upgrade_sprites])
@@ -72,10 +88,13 @@ class Game:
         overlap_sprites = pygame.sprite.spritecollide(self.player, self.upgrade_sprites, True)
         for sprite in overlap_sprites:
             self.player.upgrade(sprite.upgrade_type)
+            self.powerup_sound.play()
 
     def create_projectile(self):
+        self.laser_sound.play()
         for projectile in self.player.laser_rects:
             Projectile(pos= projectile.midtop - pygame.math.Vector2(0, 30), surface= self.projectile_surface, groups= [self.all_sprites, self.projectile_sprites])
+
 
     def laser_time(self):
         if pygame.time.get_ticks() - self.shoot_time >=500:
@@ -89,6 +108,7 @@ class Game:
                 for sprite in overlap_sprites:
                     sprite.get_damage(1)
                 projectile.kill()
+                self.laserhit_sound.play()
 
 
 
