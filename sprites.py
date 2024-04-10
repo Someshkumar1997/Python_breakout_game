@@ -2,7 +2,7 @@ from typing import Any
 import pygame
 from pygame.sprite import _Group
 from settings import *
-from random import choice
+from random import choice, randint
 
 class Upgrades(pygame.sprite.Sprite):
 
@@ -205,7 +205,8 @@ class Block(pygame.sprite.Sprite):
             # update the image
             self.image = self.surfacemaker.get_surf(COLOR_LEGEND[str(self.health)], (BLOCK_WIDTH, BLOCK_HEIGHT))
         else:
-            self.create_upgrade(self.rect.center)
+            if randint(0, 10) < 4:
+                self.create_upgrade(self.rect.center)
             self.kill()
 
 
